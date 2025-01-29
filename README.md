@@ -48,3 +48,9 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+- Instrucciones
+1. Correr yarn
+2. Ejecutar expo prebuild
+3. yarn android o yarn ios dependiendo de donde querra ejecutar el proyecto
