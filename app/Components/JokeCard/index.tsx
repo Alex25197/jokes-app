@@ -6,9 +6,11 @@ import { JokeType } from "@/types/Joke";
 export default function JokeCard({
   jokeData,
   onPress,
+  onPressSecondary,
 }: {
   jokeData: JokeType;
   onPress?: () => void;
+  onPressSecondary?: () => void;
 }) {
   return (
     <Card onPress={onPress}>
@@ -28,7 +30,8 @@ export default function JokeCard({
         <Text variant="bodyMedium">{jokeData?.value}</Text>
       </Card.Content>
       <Card.Actions>
-        <IconButton onPress={() => console.log("Fav")} icon={"heart"} iconColor={MD2Colors.red500} />
+        {onPress && <IconButton onPress={onPress} icon={"heart"} iconColor={MD2Colors.red500} />}
+        {onPressSecondary && <IconButton onPress={onPressSecondary} icon={"delete"} iconColor={MD2Colors.blue500} />}
       </Card.Actions>
     </Card>
   );

@@ -1,9 +1,10 @@
 import { FlatList } from "react-native";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { ActivityIndicator, MD2Colors, Text } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SimpleCard from "../../Components/SimpleCard";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
+import React from "react";
 
 export default function Home() {
   const { isPending, isFetching, isLoading, error, data } = useQuery({
@@ -33,8 +34,9 @@ export default function Home() {
       }}
     >
       {isFetching || isLoading || isPending ? (
-        <ActivityIndicator animating={true} color={MD2Colors.indigo500} />
-      ) : (
+        <ActivityIndicator size={"large"} animating={true} color={MD2Colors.indigo500} />
+      ) : (<>
+      <Text style={{ paddingLeft: 16 }} variant="headlineLarge">Categories</Text>
         <FlatList
           contentContainerStyle={{
             gap: 16,
@@ -44,9 +46,8 @@ export default function Home() {
           }}
           data={data}
           renderItem={renderItem}
-        />
+        /></>
       )}
-      <ActivityIndicator animating={true} color={MD2Colors.red800} />
     </SafeAreaView>
   );
 }

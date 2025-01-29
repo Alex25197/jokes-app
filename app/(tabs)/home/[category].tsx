@@ -4,9 +4,11 @@ import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import JokeCard from "@/app/Components/JokeCard";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import useJokeStore from "@/store/JokeStore";
 
 const Joke = () => {
   const local = useLocalSearchParams();
+  const favJoke = useJokeStore((state) => state.addJoke);
 
   const { isPending, error, data, isLoading, isFetching } = useQuery({
     queryKey: ["randomJoke"],
@@ -16,7 +18,6 @@ const Joke = () => {
       ).then((res) => res.json()),
   });
 
-  console.log(data);
   return (
     <View style={{ flex: 1, padding: 16 }}>
       {isPending || isLoading || isFetching ? (
@@ -24,7 +25,7 @@ const Joke = () => {
           <ActivityIndicator size={"large"} color={MD2Colors.indigo500} />
         </View>
       ) : (
-        <JokeCard jokeData={data} />
+        <JokeCard jokeData={data} onPress={() => favJoke(data)} />
       )}
     </View>
   );
