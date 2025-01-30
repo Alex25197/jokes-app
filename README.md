@@ -8,3 +8,7 @@
 - Node version 20.12.2
 - NPM Version 10.5.0
 - Version de expo 52.0.27
+
+
+- Enlace del video sobre las funcionalidades del app
+https://youtu.be/pTAruHHesM8
