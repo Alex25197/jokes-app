@@ -1,9 +1,10 @@
+// app/_layout.tsx
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
 import * as Notifications from 'expo-notifications';
-
+import { authStorage } from "@/store/authStorage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -16,7 +17,15 @@ Notifications.setNotificationHandler({
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
+
   useEffect(() => {
+    // Check if user is logged in
+    const currentUser = authStorage.getCurrentUser();
+    if (!currentUser) {
+      router.replace('/login');
+    }
+
+    // Notifications setup...
     const requestPermissions = async () => {
       const { status } = await Notifications.requestPermissionsAsync();
       if (status !== 'granted') {
@@ -39,11 +48,14 @@ export default function RootLayout() {
       subscription2.remove();
     };
   }, []);
+
   return (
     <PaperProvider>
       <QueryClientProvider client={queryClient}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="register" options={{ headerShown: false }} />
         </Stack>
       </QueryClientProvider>
     </PaperProvider>

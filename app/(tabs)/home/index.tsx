@@ -1,10 +1,11 @@
-import { FlatList } from "react-native";
-import { ActivityIndicator, MD2Colors, Text } from "react-native-paper";
+import { FlatList, View } from "react-native";
+import { ActivityIndicator, IconButton, MD2Colors, Text } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SimpleCard from "../../Components/SimpleCard";
 import { router } from "expo-router";
 import React from "react";
+import { handleLogout } from "@/utils/functions";
 
 export default function Home() {
   const { isPending, isFetching, isLoading, error, data } = useQuery({
@@ -34,19 +35,31 @@ export default function Home() {
       }}
     >
       {isFetching || isLoading || isPending ? (
-        <ActivityIndicator size={"large"} animating={true} color={MD2Colors.indigo500} />
-      ) : (<>
-      <Text style={{ paddingLeft: 16 }} variant="headlineLarge">Categories</Text>
-        <FlatList
-          contentContainerStyle={{
-            gap: 16,
-            paddingBottom: 50,
-            paddingHorizontal: 16,
-            paddingTop: 16,
-          }}
-          data={data}
-          renderItem={renderItem}
-        /></>
+        <ActivityIndicator
+          size={"large"}
+          animating={true}
+          color={MD2Colors.indigo500}
+        />
+      ) : (
+        <>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={{ paddingLeft: 16 }} variant="headlineLarge">
+              Categories
+            </Text>
+            <IconButton onPress={() => handleLogout()} icon={"logout"} />
+          </View>
+
+          <FlatList
+            contentContainerStyle={{
+              gap: 16,
+              paddingBottom: 50,
+              paddingHorizontal: 16,
+              paddingTop: 16,
+            }}
+            data={data}
+            renderItem={renderItem}
+          />
+        </>
       )}
     </SafeAreaView>
   );
